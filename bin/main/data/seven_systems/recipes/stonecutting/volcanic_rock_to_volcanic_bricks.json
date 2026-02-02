@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "seven_systems:volcanic_rock"
+  },
+  "result": "seven_systems:volcanic_bricks"
+}

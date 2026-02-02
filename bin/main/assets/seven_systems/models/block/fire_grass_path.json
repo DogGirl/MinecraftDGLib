@@ -1,0 +1,23 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "top": "seven_systems:block/fire_grass_path_top",
+    "bottom": "seven_systems:block/fire_grass_path_bottom",
+    "side": "seven_systems:block/fire_grass_path_side",
+    "particle": "seven_systems:block/fire_grass_path_top"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 15, 16],
+      "faces": {
+        "down":  { "texture": "#bottom", "cullface": "down" },
+        "up":    { "texture": "#top" },
+        "north": { "texture": "#side" },
+        "south": { "texture": "#side" },
+        "west":  { "texture": "#side" },
+        "east":  { "texture": "#side" }
+      }
+    }
+  ]
+}

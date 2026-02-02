@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "seven_systems:block/double_tall_fire_grass_bottom"
+    },
+    "half=upper": {
+      "model": "seven_systems:block/double_tall_fire_grass_top"
+    }
+  }
+}

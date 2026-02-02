@@ -1,0 +1,80 @@
+// ──────────────────────────────────────────────────────
+// plugins – use the plugin DSL so FG6 can create run tasks
+// ──────────────────────────────────────────────────────
+plugins {
+    id 'net.minecraftforge.gradle' version '6.0.23'
+    id 'org.parchmentmc.librarian.forgegradle' version '1.+'
+    id 'maven-publish'
+    id 'org.spongepowered.mixin' version '0.7.+'
+}
+
+
+
+group = 'com.msdoggirl.dglib'
+version = '1.0.0'
+archivesBaseName = 'dglib'
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+mixin {
+    add sourceSets.main, "mixins.dglib.refmap.json"
+    config "mixins.dglib.json"
+}
+
+// ──────────────────────────────────────────────────────
+// Minecraft / Forge
+// ──────────────────────────────────────────────────────
+minecraft {
+    mappings channel: 'parchment', version: '2023.09.03-1.20.1'
+
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods { dglib { source sourceSets.main } }
+        }
+        server {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            mods { dglib { source sourceSets.main } }
+        }
+        data {
+            workingDirectory project.file('run')
+            args '--mod', 'seven_systems', '--all',
+                 '--output', file('src/generated/resources/'),
+                 '--existing', file('src/main/resources/')
+            mods { dglib { source sourceSets.main } }
+        }
+
+    }
+}
+
+repositories {
+    maven { url = 'https://maven.tterrag.com/' }
+    maven { url "https://cursemaven.com"}
+}
+
+dependencies {
+    minecraft 'net.minecraftforge:forge:1.20.1-47.4.0:mapped_parchment_2023.09.03-1.20.1'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation fg.deobf("curse.maven:epic-fight-mod-405076:7213635")
+}
+
+
+jar {
+    manifest {
+        attributes(
+            'Specification-Title'     : 'dglib',
+            'Specification-Vendor'    : 'MsDogGirl',
+            'Implementation-Title'    : project.name,
+            'Implementation-Version'  : modVersion,
+            'Implementation-Vendor'   : 'MsDogGirl'
+        )
+    }
+}

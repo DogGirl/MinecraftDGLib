@@ -1,0 +1,28 @@
+{
+  "has_precipitation": false,
+  "temperature": 2.0,
+  "downfall": 0.0,
+  "effects": {
+    "sky_color": 7254527,
+    "fog_color": 10066329,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "fluid": "minecraft:lava"
+  },
+  "spawners": {},
+  "spawn_costs": {},
+  "carvers": {},
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "seven_systems:double_tall_fire_grass",
+      "seven_systems:magma_vein"
+    ]
+  ]
+}

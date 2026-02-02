@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "count": 1,
+  "ingredient": {
+    "item": "seven_systems:grimstone"
+  },
+  "result": "seven_systems:grimstone_stairs"
+}

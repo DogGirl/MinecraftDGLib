@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_grimstone_emerald_ore": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "seven_systems:grimstone_emerald_ore"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "seven_systems:blasting/grimstone_emerald_ore"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_grimstone_emerald_ore",
+      "has_the_recipe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "seven_systems:blasting/grimstone_emerald_ore"
+    ]
+  },
+  "sends_telemetry_event": false
+}

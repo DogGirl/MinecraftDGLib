@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "seven_systems:item/glowbug_spawn_egg"
+  }
+}

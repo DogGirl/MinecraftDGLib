@@ -1,0 +1,17 @@
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
+[[mods]]
+modId="seven_systems"
+version="1.0"
+displayName="Seven Systems"
+authors="msdoggirl"
+[[dependencies.seven_systems]]
+    modId="forge"
+    mandatory=true
+    versionRange="[47,)"
+    ordering="NONE"
+    side="BOTH"
+[[mixins]]
+config="mixins.seven_systems.json"
+

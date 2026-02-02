@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "seven_systems:block/infernalwood_pressure_plate"
+    },
+    "powered=true": {
+      "model": "seven_systems:block/infernalwood_pressure_plate_down"
+    }
+  }
+}

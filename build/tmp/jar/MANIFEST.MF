@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Specification-Title: dglib
+Specification-Vendor: MsDogGirl
+Implementation-Title: dglib
+Implementation-Version: alpha_1.0
+Implementation-Vendor: MsDogGirl
+MixinConfigs: mixins.dglib.json
+

@@ -1,0 +1,18 @@
+{
+  "fog_color": [0.6, 0.1, 0.1],
+  "sky_type": "normal",
+  "ambient_light": 0.0,
+  "music": {
+    "sound": "seven_systems:music/malova_1",
+    "min_delay": 12000,
+    "max_delay": 24000,
+    "replace_current_music": true
+  },
+  "ambient_loop_sound": "seven_systems:ambient/malova_ambient_1",
+  "particle": {
+    "probability": 1,
+    "options": {
+      "type": "minecraft:flame"
+    }
+  }
+}

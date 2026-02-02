@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "seven_systems:block/infernalwood_leaves"
+  }
+}

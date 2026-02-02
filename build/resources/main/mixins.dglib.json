@@ -1,0 +1,17 @@
+{
+  "required": true,
+  "minVersion": "0.8.5",
+  "package": "com.msdoggirl.dglib.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "mixins.dglib.refmap.json",
+  "mixins": [
+    "AbstractClientPlayerMixin"
+  ],
+  "client": [
+    "AbstractClientPlayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "verbose": true
+}

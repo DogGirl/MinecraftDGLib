@@ -1,0 +1,27 @@
+{
+  "has_precipitation": false,
+  "temperature": 2.0,
+  "downfall": 0.0,
+  "effects": {
+    "sky_color": 6000000,
+    "fog_color": 8000000,
+    "water_color": 4159204,
+    "water_fog_color": 329011,
+    "fluid": "minecraft:lava"
+  },
+  "spawners": {},
+  "spawn_costs": {},
+  "carvers": {},
+  "features": [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "seven_systems:magma_vein"
+    ]
+  ]
+}

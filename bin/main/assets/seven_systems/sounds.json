@@ -1,0 +1,18 @@
+{
+  "music/malova_1": {
+    "category": "music",
+    "sounds": [{ "name": "seven_systems:music/malova_1", "stream": true }]
+  },
+  "music/malova_2": {
+    "category": "music",
+    "sounds": [{ "name": "seven_systems:music/malova_2", "stream": true }]
+  },
+  "music/action_2": {
+    "category": "music",
+    "sounds": [{ "name": "seven_systems:music/action_2", "stream": true }]
+  },
+  "ambient/malova_ambient_1": {
+    "category": "ambient",
+    "sounds": [{ "name": "seven_systems:ambient/malova_ambient_1", "stream": true }]
+  }
+}
