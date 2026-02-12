@@ -151,6 +151,67 @@ public class SkinSwapper {
 
     private static NativeImage backupOriginalSkin(AbstractClientPlayer player, ResourceLocation rl) {
         Minecraft mc = Minecraft.getInstance();
+        //String testUUID = "58933e99-9e98-42dd-bbb9-a383b01bd154";
+        //String uuidNoDashes = testUUID.replace("-", "");
+        String uuidNoDashes = player.getUUID().toString().replace("-", "");
+
+        // Mojang official profile API fetch
+        String profileUrlStr = "https://sessionserver.mojang.com/session/minecraft/profile/" + uuidNoDashes + "?unsigned=false";
+        try {
+            URL profileUrl = new URL(profileUrlStr);
+            HttpURLConnection profileConn = (HttpURLConnection) profileUrl.openConnection();
+            profileConn.setRequestMethod("GET");
+            profileConn.setConnectTimeout(5000);
+            profileConn.setReadTimeout(10000);
+            if (profileConn.getResponseCode() == 200) {
+                try (BufferedReader reader = new BufferedReader(new InputStreamReader(profileConn.getInputStream(), StandardCharsets.UTF_8))) {
+                    StringBuilder sb = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line).append('\n');
+                    }
+                    String json = sb.toString();
+                    JsonObject root = JsonParser.parseString(json).getAsJsonObject();
+                    JsonArray properties = root.getAsJsonArray("properties");
+                    if (properties != null && properties.size() > 0) {
+                        JsonObject texturesProp = null;
+                        for (JsonElement propElem : properties) {
+                            JsonObject prop = propElem.getAsJsonObject();
+                            if ("textures".equals(prop.get("name").getAsString())) {
+                                texturesProp = prop;
+                                break;
+                            }
+                        }
+                        if (texturesProp != null) {
+                            String value = texturesProp.get("value").getAsString();
+                            byte[] decodedBytes = Base64.getDecoder().decode(value);
+                            String texturesJson = new String(decodedBytes, StandardCharsets.UTF_8);
+                            JsonObject texturesRoot = JsonParser.parseString(texturesJson).getAsJsonObject();
+                            JsonObject texturesObj = texturesRoot.getAsJsonObject("textures");
+                            if (texturesObj.has("SKIN")) {
+                                JsonObject skinObj = texturesObj.getAsJsonObject("SKIN");
+                                String skinUrlStr = skinObj.get("url").getAsString();
+                                URL skinUrl = new URL(skinUrlStr);
+                                HttpURLConnection skinConn = (HttpURLConnection) skinUrl.openConnection();
+                                skinConn.setRequestMethod("GET");
+                                skinConn.setConnectTimeout(5000);
+                                skinConn.setReadTimeout(10000);
+                                if (skinConn.getResponseCode() == 200) {
+                                    try (InputStream stream = skinConn.getInputStream()) {
+                                        NativeImage img = NativeImage.read(stream);
+                                        if (isValidSkin(img)) {
+                                            System.out.println("Skin fetched from Mojang servers.");
+                                            return img;
+                                        }
+                                        img.close();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (Exception ignored) {}
 
         // Try to load from resource manager (local files or packs)
         try {
