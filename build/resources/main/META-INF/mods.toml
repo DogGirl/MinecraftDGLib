@@ -3,11 +3,11 @@ loaderVersion="[47,)"
 license="Attribution-NonCommercial-ShareAlike 4.0 International"
 [[mods]]
 modId="dglib"
-version="1.0_alpha"
+version="1.2_alpha"
 displayName="DGLib"
 authors="msdoggirl"
 description='''
-  Common code for MsDogGirl's mods. Includes dynamic skin swapping and emissive skin layer APIs. 
+  Common code for MsDogGirl's mods. Includes dynamic skin swapping, color picker UI, and emissive skin layer APIs.
   '''
 [[dependencies.dglib]]
     modId="forge"

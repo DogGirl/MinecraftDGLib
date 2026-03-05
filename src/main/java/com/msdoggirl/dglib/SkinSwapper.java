@@ -9,9 +9,18 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import java.io.InputStream;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+import com.google.gson.JsonParser;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -228,7 +237,6 @@ public class SkinSwapper {
         } catch (Exception ignored) {}
 
         // Minotar fallback using player's UUID
-        String uuidNoDashes = player.getUUID().toString().replace("-", "");
         String minotarUrl = "https://minotar.net/skin/" + uuidNoDashes;
         try {
             URL url = new URL(minotarUrl);
@@ -238,6 +246,7 @@ public class SkinSwapper {
                 try (InputStream stream = url.openStream()) {
                     NativeImage img = NativeImage.read(stream);
                     if (isValidSkin(img)) {
+                        System.out.println("Skin fetched from Minotar fallback.");
                         return img;
                     }
                     img.close();
@@ -247,7 +256,7 @@ public class SkinSwapper {
 
         // Default Steve/Alex based on model
         ResourceLocation defaultRL = player.getModelName().equals("slim") ?
-                new ResourceLocation("minecraft", "textures/entity/alex.png") : // Adjust if wrong path
+                new ResourceLocation("minecraft", "textures/entity/alex.png") :
                 new ResourceLocation("minecraft", "textures/entity/steve.png");
 
         try {
