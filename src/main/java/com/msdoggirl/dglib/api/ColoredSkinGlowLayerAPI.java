@@ -162,6 +162,18 @@ public class ColoredSkinGlowLayerAPI {
         return getOrCreate(uuid).leftLegGlowTexture;
     }
 
+    public static int getHeadColor(UUID uuid) { return getOrCreate(uuid).headGlowColor; }
+
+    public static int getBodyColor(UUID uuid) { return getOrCreate(uuid).bodyGlowColor; }
+
+    public static int getRightArmColor(UUID uuid) { return getOrCreate(uuid).rightArmGlowColor; }
+
+    public static int getLeftArmColor(UUID uuid) { return getOrCreate(uuid).leftArmGlowColor; }
+
+    public static int getRightLegColor(UUID uuid) { return getOrCreate(uuid).rightLegGlowColor; }
+
+    public static int getLeftLegColor(UUID uuid) { return getOrCreate(uuid).leftLegGlowColor; }
+
     // Convenience for local player
     public static void setHeadGlowColored(ResourceLocation mask, int colorARGB, boolean enabled) {
         UUID local = Minecraft.getInstance().player.getUUID();
