@@ -136,10 +136,10 @@ Adding input to inheritance map
 Processing entries
 Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerScreen/isPauseScreen()Z from net/minecraft/client/gui/screens/Screen/isPauseScreen()Z: isPauseScreen -> m_7043_
 Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerScreen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/screens/Screen/render(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: render -> m_88315_
-Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
-Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerScreen/rebuildWidgets()V from net/minecraft/client/gui/screens/Screen/rebuildWidgets()V: rebuildWidgets -> m_232761_
 Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerWidget/mouseClicked(DDI)Z from net/minecraft/client/gui/components/AbstractWidget/mouseClicked(DDI)Z: mouseClicked -> m_6375_
+Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerScreen/init()V from net/minecraft/client/gui/screens/Screen/init()V: init -> m_7856_
 Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerWidget/updateWidgetNarration(Lnet/minecraft/client/gui/narration/NarrationElementOutput;)V from net/minecraft/client/gui/components/AbstractWidget/updateWidgetNarration(Lnet/minecraft/client/gui/narration/NarrationElementOutput;)V: updateWidgetNarration -> m_168797_
+Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerScreen/rebuildWidgets()V from net/minecraft/client/gui/screens/Screen/rebuildWidgets()V: rebuildWidgets -> m_232761_
 Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerWidget/renderWidget(Lnet/minecraft/client/gui/GuiGraphics;IIF)V from net/minecraft/client/gui/components/AbstractWidget/renderWidget(Lnet/minecraft/client/gui/GuiGraphics;IIF)V: renderWidget -> m_87963_
 Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerWidget/mouseDragged(DDIDD)Z from net/minecraft/client/gui/components/AbstractWidget/mouseDragged(DDIDD)Z: mouseDragged -> m_7979_
 Conflicting propagated mapping for com/msdoggirl/dglib/gui/ColorPickerWidget/mouseReleased(DDI)Z from net/minecraft/client/gui/components/AbstractWidget/mouseReleased(DDI)Z: mouseReleased -> m_6348_
