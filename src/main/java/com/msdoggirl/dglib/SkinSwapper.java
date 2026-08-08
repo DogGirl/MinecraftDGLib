@@ -34,7 +34,19 @@ public class SkinSwapper {
     private static final Map<UUID, ResourceLocation> playerSwappedSkinRLs = new HashMap<>();
     private static final Map<UUID, Map<String, String>> playerActiveLimbSwaps = new HashMap<>();
     private static final Map<UUID, Map<String, String>> playerActiveOverlays = new HashMap<>();
+    private static final Map<UUID, Map<String, TintedOverlay>> playerActiveTintedOverlays = new HashMap<>();
     public static Map<UUID, String> playerFullSkinPaths = new HashMap<>();
+
+    // Helper class for storing tinted overlay data
+    public static class TintedOverlay {
+        public String path;
+        public int tintColor; // ARGB format
+
+        public TintedOverlay(String path, int tintColor) {
+            this.path = path;
+            this.tintColor = tintColor;
+        }
+    }
 
     // ------------------ Mixin access ------------------
 
@@ -69,12 +81,26 @@ public class SkinSwapper {
         regenerateSwappedSkin(uuid);
     }
 
+    public static void enableLimbTintedOverlay(UUID uuid, String limb, String path, int tintColor) {
+        getActiveTintedOverlays(uuid).put(limb, new TintedOverlay(path, tintColor));
+        regenerateSwappedSkin(uuid);
+    }
+
+    public static void disableLimbTintedOverlay(UUID uuid, String limb) {
+        getActiveTintedOverlays(uuid).remove(limb);
+        regenerateSwappedSkin(uuid);
+    }
+
     private static Map<String, String> getActiveLimbSwaps(UUID uuid) {
         return playerActiveLimbSwaps.computeIfAbsent(uuid, k -> new HashMap<>());
     }
 
     private static Map<String, String> getActiveLimbOverlays(UUID uuid) {
         return playerActiveOverlays.computeIfAbsent(uuid, k -> new HashMap<>());
+    }
+
+    private static Map<String, TintedOverlay> getActiveTintedOverlays(UUID uuid) {
+        return playerActiveTintedOverlays.computeIfAbsent(uuid, k -> new HashMap<>());
     }
 
     public static void regenerateSwappedSkin(UUID uuid) {
@@ -135,8 +161,18 @@ public class SkinSwapper {
             }
         }
 
+        // Apply tinted overlays
+        Map<String, TintedOverlay> tintedOverlays = getActiveTintedOverlays(uuid);
+        for (Map.Entry<String, TintedOverlay> entry : tintedOverlays.entrySet()) {
+            NativeImage overlaySrc = loadAltImage(entry.getValue().path);
+            if (overlaySrc != null) {
+                applyLimbTintedOverlay(overlaySrc, modified, entry.getKey(), entry.getValue().tintColor);
+                overlaySrc.close();
+            }
+        }
+
         // If no changes, don't register new texture
-        if (fullPath == null && limbs.isEmpty() && overlays.isEmpty()) {
+        if (fullPath == null && limbs.isEmpty() && overlays.isEmpty() && tintedOverlays.isEmpty()) {
             modified.close();
             removeSwappedSkin(uuid);
             return;
@@ -332,7 +368,7 @@ public class SkinSwapper {
         }
     }
 
-        private static void applyLimbOverlay(NativeImage src, NativeImage dst, String limb) {
+    private static void applyLimbOverlay(NativeImage src, NativeImage dst, String limb) {
         switch (limb.toLowerCase()) {
             case "left_arm":
                 blendRect(src, dst, 32, 48, 32, 48, 16, 16);
@@ -360,6 +396,38 @@ public class SkinSwapper {
                 break;
             case "full":
                 copyFullBlend(src, dst);
+                break;
+        }
+    }
+
+    private static void applyLimbTintedOverlay(NativeImage src, NativeImage dst, String limb, int tintColor) {
+        switch (limb.toLowerCase()) {
+            case "left_arm":
+                blendRectTinted(src, dst, 32, 48, 32, 48, 16, 16, tintColor);
+                blendRectTinted(src, dst, 48, 48, 48, 48, 16, 16, tintColor);
+                break;
+            case "right_arm":
+                blendRectTinted(src, dst, 40, 16, 40, 16, 16, 16, tintColor);
+                blendRectTinted(src, dst, 40, 32, 40, 32, 16, 16, tintColor);
+                break;
+            case "left_leg":
+                blendRectTinted(src, dst, 16, 48, 16, 48, 16, 16, tintColor);
+                blendRectTinted(src, dst, 0, 48, 0, 48, 16, 16, tintColor);
+                break;
+            case "right_leg":
+                blendRectTinted(src, dst, 0, 16, 0, 16, 16, 16, tintColor);
+                blendRectTinted(src, dst, 0, 32, 0, 32, 16, 16, tintColor);
+                break;
+            case "head":
+                blendRectTinted(src, dst, 0, 0, 0, 0, 64, 16, tintColor);
+                blendRectTinted(src, dst, 32, 0, 32, 0, 32, 16, tintColor);
+                break;
+            case "body":
+                blendRectTinted(src, dst, 16, 16, 16, 16, 24, 16, tintColor);
+                blendRectTinted(src, dst, 16, 32, 16, 32, 24, 16, tintColor);
+                break;
+            case "full":
+                copyFullBlendTinted(src, dst, tintColor);
                 break;
         }
     }
@@ -398,6 +466,48 @@ public class SkinSwapper {
         }
     }
 
+    private static void blendRectTinted(NativeImage src, NativeImage dst, int sx, int sy, int dx, int dy, int w, int h, int tintColor) {
+        int tintR = (tintColor >> 16) & 0xFF;
+        int tintG = (tintColor >> 8) & 0xFF;
+        int tintB = tintColor & 0xFF;
+
+        for (int x = 0; x < w; x++) {
+            for (int y = 0; y < h; y++) {
+                int srcColor = src.getPixelRGBA(sx + x, sy + y);
+                int srcA = (srcColor >> 24) & 0xFF;
+                if (srcA == 0) continue;
+
+                // Apply tint to source color
+                int srcR = (srcColor >> 16) & 0xFF;
+                int srcG = (srcColor >> 8) & 0xFF;
+                int srcB = srcColor & 0xFF;
+
+                // Blend tint with source (multiply)
+                srcR = (srcR * tintR) / 255;
+                srcG = (srcG * tintG) / 255;
+                srcB = (srcB * tintB) / 255;
+
+                int dstColor = dst.getPixelRGBA(dx + x, dy + y);
+
+                if (srcA == 255) {
+                    dst.setPixelRGBA(dx + x, dy + y, (srcA << 24) | (srcR << 16) | (srcG << 8) | srcB);
+                } else {
+                    int dstR = (dstColor >> 16) & 0xFF;
+                    int dstG = (dstColor >> 8) & 0xFF;
+                    int dstB = dstColor & 0xFF;
+
+                    float alpha = srcA / 255f;
+                    int r = (int)(srcR * alpha + dstR * (1 - alpha));
+                    int g = (int)(srcG * alpha + dstG * (1 - alpha));
+                    int b = (int)(srcB * alpha + dstB * (1 - alpha));
+
+                    int blended = (srcA << 24) | (r << 16) | (g << 8) | b;
+                    dst.setPixelRGBA(dx + x, dy + y, blended);
+                }
+            }
+        }
+    }
+
     private static void copyRect(NativeImage src, NativeImage dst, int sx, int sy, int dx, int dy, int w, int h) {
         for (int x = 0; x < w; x++) {
             for (int y = 0; y < h; y++) {
@@ -414,6 +524,10 @@ public class SkinSwapper {
         blendRect(src, dst, 0, 0, 0, 0, src.getWidth(), src.getHeight());
     }
 
+    private static void copyFullBlendTinted(NativeImage src, NativeImage dst, int tintColor) {
+        blendRectTinted(src, dst, 0, 0, 0, 0, src.getWidth(), src.getHeight(), tintColor);
+    }
+
     public static void cleanup() {
         for (UUID uuid : new HashMap<>(playerOriginalSkinImages).keySet()) {
             NativeImage img = playerOriginalSkinImages.remove(uuid);
@@ -424,5 +538,6 @@ public class SkinSwapper {
         playerActiveLimbSwaps.clear();
         playerFullSkinPaths.clear();
         playerActiveOverlays.clear();
+        playerActiveTintedOverlays.clear();
     }
 }

@@ -47,8 +47,8 @@ minecraft {
         data {
             workingDirectory project.file('run')
             args '--mod', 'seven_systems', '--all',
-                 '--output', file('src/generated/resources/'),
-                 '--existing', file('src/main/resources/')
+                    '--output', file('src/generated/resources/'),
+                    '--existing', file('src/main/resources/')
             mods { dglib { source sourceSets.main } }
         }
 
@@ -80,11 +80,11 @@ dependencies {
 jar {
     manifest {
         attributes(
-            'Specification-Title'     : 'dglib',
-            'Specification-Vendor'    : 'MsDogGirl',
-            'Implementation-Title'    : project.name,
-            'Implementation-Version'  : modVersion,
-            'Implementation-Vendor'   : 'MsDogGirl'
+                'Specification-Title'     : 'dglib',
+                'Specification-Vendor'    : 'MsDogGirl',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : modVersion,
+                'Implementation-Vendor'   : 'MsDogGirl'
         )
     }
 }

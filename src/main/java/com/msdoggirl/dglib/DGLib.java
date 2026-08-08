@@ -73,5 +73,6 @@ public class DGLib {
                     GlowSyncPacket::decode,
                     GlowSyncPacket::handle);
         });
+        System.out.println("This is a branch.");
     }
 }

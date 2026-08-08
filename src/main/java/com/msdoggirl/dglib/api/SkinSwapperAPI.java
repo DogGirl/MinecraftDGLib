@@ -115,4 +115,58 @@ public class SkinSwapperAPI {
         SkinSwapper.regenerateSwappedSkin(uuid);
     }
 
-}
+    public static void enableLeftArmTintedOverlay(UUID uuid, String altTexturePath, int tintColor) {
+        SkinSwapper.enableLimbTintedOverlay(uuid, "left_arm", altTexturePath, tintColor);
+    }
+
+    public static void disableLeftArmTintedOverlay(UUID uuid) {
+        SkinSwapper.disableLimbTintedOverlay(uuid, "left_arm");
+    }
+
+    public static void enableRightArmTintedOverlay(UUID uuid, String altTexturePath, int tintColor) {
+        SkinSwapper.enableLimbTintedOverlay(uuid, "right_arm", altTexturePath, tintColor);
+    }
+
+    public static void disableRightArmTintedOverlay(UUID uuid) {
+        SkinSwapper.disableLimbTintedOverlay(uuid, "right_arm");
+    }
+
+    public static void enableLeftLegTintedOverlay(UUID uuid, String altTexturePath, int tintColor) {
+        SkinSwapper.enableLimbTintedOverlay(uuid, "left_leg", altTexturePath, tintColor);
+    }
+
+    public static void disableLeftLegTintedOverlay(UUID uuid) {
+        SkinSwapper.disableLimbTintedOverlay(uuid, "left_leg");
+    }
+
+    public static void enableRightLegTintedOverlay(UUID uuid, String altTexturePath, int tintColor) {
+        SkinSwapper.enableLimbTintedOverlay(uuid, "right_leg", altTexturePath, tintColor);
+    }
+
+    public static void disableRightLegTintedOverlay(UUID uuid) {
+        SkinSwapper.disableLimbTintedOverlay(uuid, "right_leg");
+    }
+
+    public static void enableHeadTintedOverlay(UUID uuid, String altTexturePath, int tintColor) {
+        SkinSwapper.enableLimbTintedOverlay(uuid, "head", altTexturePath, tintColor);
+    }
+
+    public static void disableHeadTintedOverlay(UUID uuid) {
+        SkinSwapper.disableLimbTintedOverlay(uuid, "head");
+    }
+
+    public static void enableBodyTintedOverlay(UUID uuid, String altTexturePath, int tintColor) {
+        SkinSwapper.enableLimbTintedOverlay(uuid, "body", altTexturePath, tintColor);
+    }
+
+    public static void disableBodyTintedOverlay(UUID uuid) {
+        SkinSwapper.disableLimbTintedOverlay(uuid, "body");
+    }
+
+    public static void enableFullTintedOverlay(UUID uuid, String altTexturePath, int tintColor) {
+        SkinSwapper.enableLimbTintedOverlay(uuid, "full", altTexturePath, tintColor);
+    }
+
+    public static void disableFullTintedOverlay(UUID uuid) {
+        SkinSwapper.disableLimbTintedOverlay(uuid, "full");
+    }}
