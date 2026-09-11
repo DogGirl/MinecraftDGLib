@@ -5,12 +5,14 @@ import com.msdoggirl.dglib.capability.IGlowData;
 import com.msdoggirl.dglib.network.GlowChangePacket;
 import com.msdoggirl.dglib.network.GlowSyncPacket;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
 
@@ -38,14 +40,12 @@ public class DGLib {
         // Register packets
         modBus.addListener(this::commonSetup);
 
-        // Client-side events
-        forgeBus.addListener(ModEvents::onClientTick);
+        if (FMLLoader.getDist() == Dist.CLIENT) {
+            forgeBus.addListener(ModEvents::onClientTick);
+        }
 
         // Attach capability to players
         forgeBus.register(new GlowDataProvider());
-
-        //Deprecated
-        forgeBus.addListener(ClientModEvents::onClientTick);
 
 
     }

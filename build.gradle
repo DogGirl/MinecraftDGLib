@@ -68,6 +68,7 @@ dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.4.0:mapped_parchment_2023.09.03-1.20.1'
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
     //implementation fg.deobf("curse.maven:epic-fight-mod-405076:7213635")
+    //implementation fg.deobf("curse.maven:cyberware-visible-modifications-1450029:8394604")
 
     //implementation fg.deobf("org.valkyrienskies:valkyrienskies-120-forge:${rootProject.vs2_version}")
     //implementation("org.valkyrienskies.core:api:$vs_core_version")
@@ -75,6 +76,7 @@ dependencies {
     //implementation("org.valkyrienskies.core:util:$vs_core_version")
     //implementation("org.valkyrienskies.core:impl:$vs_core_version")
     //implementation("thedarkcolour:kotlinforforge:$forge_kotlin_version")
+    //implementation fg.deobf("curse.maven:mekanism-268560:6552911")
 
 }
 jar {
